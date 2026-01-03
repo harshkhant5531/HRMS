@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  employeeId    String    @unique
+  email         String    @unique
+  password      String
+  role          String    @default("EMPLOYEE") // ADMIN, EMPLOYEE
+  name          String?
+  profilePic    String?
+  jobTitle      String?
+  department    String?
+  joiningDate   DateTime  @default(now())
+  phone         String?
+  address       String?
+  
+  // Relations
+  attendances   Attendance[]
+  leaveRequests LeaveRequest[]
+  payrolls      Payroll[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Attendance {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  date      DateTime @default(now())
+  checkIn   DateTime?
+  checkOut  DateTime?
+  status    String   @default("PRESENT") // PRESENT, ABSENT, HALF_DAY, LEAVE
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+}
+
+model LeaveRequest {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  type         String   // PAID, SICK, UNPAID
+  startDate    DateTime
+  endDate      DateTime
+  remarks      String?
+  status       String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  adminComment String?
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Payroll {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  month       Int
+  year        Int
+  baseSalary  Float
+  deductions  Float    @default(0)
+  netSalary   Float
+  status      String   @default("PENDING") // PAID, PENDING
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, month, year])
+}
