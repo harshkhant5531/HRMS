@@ -9,9 +9,11 @@ import {
     DollarSign,
     ArrowUpRight,
     User,
-    Filter
+    Filter,
+    Download
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { generatePayrollPDF } from "@/lib/pdf-generator";
 
 export default function AdminPayrollPage() {
     const [payrolls, setPayrolls] = useState<any[]>([]);
@@ -110,7 +112,8 @@ export default function AdminPayrollPage() {
                                     <th className="px-8 py-6">Period</th>
                                     <th className="px-8 py-6">Base Salary</th>
                                     <th className="px-8 py-6">Net Paid</th>
-                                    <th className="px-8 py-6 text-right">Status</th>
+                                    <th className="px-8 py-6">Status</th>
+                                    <th className="px-8 py-6 text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5 text-sm">
@@ -134,8 +137,16 @@ export default function AdminPayrollPage() {
                                         <td className="px-8 py-6">
                                             <p className="font-mono font-bold text-white text-lg">${payroll.netSalary.toLocaleString()}</p>
                                         </td>
-                                        <td className="px-8 py-6 text-right">
+                                        <td className="px-8 py-6">
                                             <span className="bg-green-500/10 text-green-400 text-[10px] font-bold px-3 py-1 rounded-full border border-green-500/20">PAID</span>
+                                        </td>
+                                        <td className="px-8 py-6 text-right">
+                                            <button
+                                                onClick={() => generatePayrollPDF(payroll)}
+                                                className="p-3 rounded-xl bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-400 transition-all border border-white/5"
+                                            >
+                                                <Download className="w-5 h-5" />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

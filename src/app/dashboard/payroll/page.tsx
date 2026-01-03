@@ -11,10 +11,13 @@ import {
     BadgeCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { generatePayrollPDF } from "@/lib/pdf-generator";
+import { useSession } from "next-auth/react";
 
 export default function PayrollPage() {
     const [payrolls, setPayrolls] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const { data: session } = useSession();
 
     useEffect(() => {
         fetchPayrolls();
@@ -65,7 +68,17 @@ export default function PayrollPage() {
                             <span className="text-gray-500">• {months[payrolls[0]?.month - 1]} {payrolls[0]?.year}</span>
                         </div>
 
-                        <button className="w-full mt-10 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl flex items-center justify-center gap-3 font-bold transition-all active:scale-[0.98]">
+                        <button
+                            onClick={() => generatePayrollPDF({
+                                ...payrolls[0],
+                                user: {
+                                    name: session?.user?.name || "Employee",
+                                    employeeId: (session?.user as any)?.employeeId || "N/A",
+                                    jobTitle: (session?.user as any)?.jobTitle || "Team Member"
+                                }
+                            })}
+                            className="w-full mt-10 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl flex items-center justify-center gap-3 font-bold transition-all active:scale-[0.98]"
+                        >
                             <Download className="w-5 h-5" />
                             Download Slip
                         </button>
@@ -118,7 +131,17 @@ export default function PayrollPage() {
                                             <p className="text-xs text-gray-500 font-bold tracking-tighter uppercase mb-1">Net Paid</p>
                                             <p className="font-mono font-bold text-lg text-white">${payroll.netSalary.toLocaleString()}</p>
                                         </div>
-                                        <button className="p-3 rounded-xl bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-400 transition-all">
+                                        <button
+                                            onClick={() => generatePayrollPDF({
+                                                ...payroll,
+                                                user: {
+                                                    name: session?.user?.name || "Employee",
+                                                    employeeId: (session?.user as any)?.employeeId || "N/A",
+                                                    jobTitle: (session?.user as any)?.jobTitle || "Team Member"
+                                                }
+                                            })}
+                                            className="p-3 rounded-xl bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-400 transition-all"
+                                        >
                                             <Download className="w-5 h-5" />
                                         </button>
                                     </div>
