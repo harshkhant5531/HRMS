@@ -69,23 +69,23 @@ export default function LandingPage() {
             </div>
 
             {/* Floating UI Badges */}
-            <div className="absolute -left-10 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 animate-bounce-slow">
-              <div className="p-4 rounded-2xl bg-[#11141a] border border-white/10 shadow-xl backdrop-blur-xl flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <div className="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-6 animate-bounce-slow">
+              <div className="p-5 rounded-[24px] bg-[#11141a]/90 border border-white/10 shadow-2xl backdrop-blur-2xl flex items-center gap-4 min-w-[200px] hover:border-indigo-500/30 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                 </div>
                 <div>
-                  <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Attendance</p>
-                  <p className="text-xs font-bold text-white">98% Logged</p>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Attendance</p>
+                  <p className="text-sm font-bold text-white leading-none">98.4% Logged</p>
                 </div>
               </div>
-              <div className="p-4 rounded-2xl bg-[#11141a] border border-white/10 shadow-xl backdrop-blur-xl flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-indigo-500" />
+              <div className="p-5 rounded-[24px] bg-[#11141a]/90 border border-white/10 shadow-2xl backdrop-blur-2xl flex items-center gap-4 min-w-[200px] hover:border-indigo-500/30 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                  <Users className="w-5 h-5 text-indigo-500" />
                 </div>
                 <div>
-                  <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Workforce</p>
-                  <p className="text-xs font-bold text-white">124 Members</p>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Workforce</p>
+                  <p className="text-sm font-bold text-white leading-none">124 Members</p>
                 </div>
               </div>
             </div>
